@@ -18,10 +18,13 @@ function Loginuser() {
   const [message, setmessage] = useState('');
   const [warmessage, setwarmessage] = useState('');
   const [order, setorder] = useState("ASC");
+  const [searchLogin, setSearchLogin] = useState('');
+
   const showhideMODAL = () => {
     setisOpensuccessmsg(false);
     setisOpen(false);
   };
+
   const showhideMODALw = () => {
     setisOpensuccessmsgw(false);
   };
@@ -33,16 +36,11 @@ function Loginuser() {
         'auth': 'ZTEwYWRjMzk0OWJhNTlhYmJlNTZlMDU3ZjIwZjg4M2U6OmVwcGF5OjozMTQ1MDFVVEM='
       }
     }
-
     await axios
       .post(URL + "/GetUserList", { search_type: '', keyboard: '' }, headers)
-
       .then((response) => {
-
         setData(response.data.data);
         //console.log(response)
-
-
       })
       .catch((err) => {
         console.log("AXIOS ERROR: ", err);
@@ -55,7 +53,6 @@ function Loginuser() {
 
   // modal
   const [isOpen, setisOpen] = useState(false);
-
   const [mseq, setmseq] = useState('');
   const [muserid, setmuserid] = useState('');
   const [mdisplayname, setDisplayName] = useState('');
@@ -63,7 +60,6 @@ function Loginuser() {
   const [mpartnerid, setPartnerid] = useState('');
   const [mcustomerid, setCustomerid] = useState('');
   const [mpassword, setPassword] = useState('');
-
   const [mcustomer, setmcustomer] = useState('');
   const [mlocation, setmlocation] = useState('');
   const [mtid, setmtid] = useState('');
@@ -76,14 +72,13 @@ function Loginuser() {
   const [mresellerid, setmresellerid] = useState('');
   const [mreseller, setmreseller] = useState('');
 
-
   const closeModal = () => {
     setisOpen(false)
   };
+
   function openRegistrationmodal(resource) {
     setmseq(resource.mseq)
     setmuserid(resource.muserid)
-
     //console.log(resource.mseq)           
     //console.log(resource.muserid)           
     if (resource.mseq !== '') {
@@ -101,18 +96,15 @@ function Loginuser() {
         setPartnerid(SetUserInfo.resellerid)
         setCustomerid(SetUserInfo.customerseq)
         setisOpen(true)
-
       })
     } else {
       setisOpen(true)
     }
-
-
   };
+
   // modal
   // save data    
   const SaveUserInfo = () => {
-
     if (mdisplayname == '') {
       setisOpensuccessmsgw(true);
       setwarmessage("Name is a required input.");
@@ -123,28 +115,22 @@ function Loginuser() {
       setwarmessage("Please select role.");
       return;
     }
-
     if (mseq !== '') {
       var seq = mseq
     } else {
       var seq = '-1'
     }
-
     if (mcustomerid !== '') {
       var customerseq = mcustomerid
     } else {
       var customerseq = '-1'
     }
-
-
     const headers = {
-
       headers: {
         'Content-Type': 'application/json',
         'auth': 'ZTEwYWRjMzk0OWJhNTlhYmJlNTZlMDU3ZjIwZjg4M2U6OmVwcGF5OjozMTQ1MDFVVEM='
       }
     }
-
     axios
       .post(URL + "/SaveUserInfo", {
         seq: seq,
@@ -155,49 +141,37 @@ function Loginuser() {
         reseller_id: mpartnerid,
         customer_id: customerseq,
       }, headers)
-
       .then((response) => {
         setisOpensuccessmsg(true);
         setmessage("Succeed");
         GetUserList();
-
       })
       .catch((err) => {
         console.log("AXIOS ERROR: ", err);
       })
-
-
   };
-  // save data
 
+  // save data
   //reseller list
   useEffect(() => {
-
     const headers = {
       headers: {
         'Content-Type': 'application/json',
         'auth': 'ZTEwYWRjMzk0OWJhNTlhYmJlNTZlMDU3ZjIwZjg4M2U6OmVwcGF5OjozMTQ1MDFVVEM='
       }
     }
-
     axios
       .post(URL + "/GetResellerList", { resellerid: '', }, headers)
-
       .then((response) => {
-
         setDatar(response.data.data);
         //console.log(response)
-
-
       })
       .catch((err) => {
         console.log("AXIOS ERROR: ", err);
       })
-
   }, []);
 
   //customer list on reseller id
-
   const getCustomerRecord = (e) => {
     setmresellerid(e.target.value)
     const headers = {
@@ -211,13 +185,10 @@ function Loginuser() {
     }, headers).then((response) => {
       setDatacus(response.data.data);
     })
-
-
   };
+
   const rolechange = (e) => {
     setRole(e.target.value)
-
-
   };
 
   // search    
@@ -250,6 +221,7 @@ function Loginuser() {
     setData(rec)
     //console.log(rec);
   };
+
   //Pagination
   const [currentPage, setcurrentPage] = useState(1);
   const [itemsPerPage, setitemsPerPage] = useState(10);
@@ -287,7 +259,6 @@ function Loginuser() {
   });
   const handleNextbtn = () => {
     setcurrentPage(currentPage + 1);
-
     if (currentPage + 1 > maxPageNumberLimit) {
       setmaxPageNumberLimit(maxPageNumberLimit + pageNumberLimit);
       setminPageNumberLimit(minPageNumberLimit + pageNumberLimit);
@@ -296,7 +267,6 @@ function Loginuser() {
 
   const handlePrevbtn = () => {
     setcurrentPage(currentPage - 1);
-
     if ((currentPage - 1) % pageNumberLimit == 0) {
       setmaxPageNumberLimit(maxPageNumberLimit - pageNumberLimit);
       setminPageNumberLimit(minPageNumberLimit - pageNumberLimit);
@@ -313,28 +283,34 @@ function Loginuser() {
     pageDecrementBtn = <li onClick={handlePrevbtn}> &hellip; </li>;
   }
 
-  //sorting
   const sorting = (col) => {
+    console.log(col)
     if (order === "ASC") {
       const sorted = [...data].sort((a, b) =>
-        a[col].toLowerCase() > b[col].toLowerCase() ? 1 : -1
+        col === 'seq' ?
+          a[col] > b[col] ? 1 : -1
+          :
+          a[col].toLowerCase() > b[col].toLowerCase() ? 1 : -1
       );
       setData(sorted);
       setorder("DSC");
-
     }
     if (order === "DSC") {
-      const sorted = [...data].sort((a, b) =>
-        a[col].toLowerCase() > b[col].toLowerCase() ? 1 : -1
+      const sorted = [...data].sort((b, a) =>
+        col === 'seq' ?
+          a[col] > b[col] ? 1 : -1
+          :
+          a[col].toLowerCase() > b[col].toLowerCase() ? 1 : -1
       );
       setData(sorted);
       setorder("ASC");
-
     }
   };
 
-
-
+  const eventCall = (e) => {
+    setSearchLogin(e.target.value);
+    if (e.target.value === '') { GetUserList(); }
+  }
 
   return (
     <main className="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
@@ -350,17 +326,13 @@ function Loginuser() {
               </ol>
               <h6 className="font-weight-bolder mb-0">{t('Terminal management')}</h6>
             </nav>
-
           </div>
         </nav>
-
         <div className="container-fluid pt-1 py-4 px-0">
           <div className="row">
             <div className="col-lg-12 col-md-12 mb-4">
               <div className="card p-2 px-4">
                 <form className="information_form" onSubmit={handelSubmit}>
-
-
                   <div className="row mt-3">
                     <div className="col-md-2">
                       <label className="input_label_padding_top">{t('Search')}</label>
@@ -378,21 +350,19 @@ function Loginuser() {
                     </div>
                     <div className="col-md-3">
                       <div className="input-group">
-                        <input type="text" className="form-control" name='keyword' />
+                        <input type="text" className="form-control" name='keyword' onChange={(e) => { eventCall(e) }} />
                       </div>
                     </div>
                     <div className="col-md-2">
                       <div className="input-group">
-                        <button type="submit" className="btn btn-outline-success allBtnsize">{t('Search')}</button>
+                        <button type="submit" className="btn btn-outline-success allBtnsize" disabled={searchLogin.length ? false : true}>{t('Search')}</button>
                       </div>
                     </div>
                   </div>
-
                 </form>
               </div>
             </div>
           </div>
-
           <div className="row">
             <div className="col-lg-12 col-md-12 mb-4">
               <div className="card p-4">
@@ -404,18 +374,14 @@ function Loginuser() {
                       </div>
                       <div className="col-md-6">
                         <div className="">
-
                         </div>
                       </div>
                     </div>
                   </div>
-
-
                   <div className="top-space-search-reslute">
                     <div className="tab-content p-4 pt-0 pb-0">
                       <div className="tab-pane active" id="header" role="tabpanel">
                         <div id="datatable_wrapper" className="information_dataTables dataTables_wrapper dt-bootstrap4 table-responsive">
-
                           <div className="d-flex exportPopupBtn">
                             <ReactHTMLTableToExcel
                               className="btn button btn-info mx-2"
@@ -462,7 +428,6 @@ function Loginuser() {
                               {pageDecrementBtn}
                               {renderPageNumbers}
                               {pageIncrementBtn}
-
                               <li>
                                 <button
                                   onClick={handleNextbtn}
@@ -514,9 +479,7 @@ function Loginuser() {
                                           <option value='1'>{t('Manager')}</option>
                                           <option value='2'>{t('Partner')}</option>
                                           <option value='3'>{t('Customer')}</option>
-
                                         </select>
-
                                       </div>
                                     </div>
                                     <div className='row mb-3'>
@@ -543,7 +506,6 @@ function Loginuser() {
                                         </select>
                                       </div>
                                     </div>
-
                                   </div>
                                   <div className="formProgressBtn">
                                     <div className="row">
@@ -552,20 +514,14 @@ function Loginuser() {
                                       </div>
                                       <div className="col-md-7 d-flex justify-content-end popupbtn_mrgn">
                                         <button type="submit" className="btn btn-sm savepopupbtn" onClick={SaveUserInfo} >{t('Save')}</button>
-
-
                                       </div>
                                     </div>
                                   </div>
                                 </form>
                               </div>
-
                             </Modal.Body>
                           </Modal>
                           {/* registration */}
-
-
-
                         </div>
                       </div>
                     </div>
@@ -575,14 +531,7 @@ function Loginuser() {
             </div>
           </div>
         </div>
-
-
-
-
       </div>
-
-
-
       <footer className="card footer py-4">
         <div className="container-fluid">
           <div className="row align-items-center justify-content-lg-between">
@@ -592,7 +541,6 @@ function Loginuser() {
                 <a href="#!" className="font-weight-bold" target="_blank">EP Pay</a> {t('All rights reserved')}.
               </div>
             </div>
-
           </div>
         </div>
       </footer>

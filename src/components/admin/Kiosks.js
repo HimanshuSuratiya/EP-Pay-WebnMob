@@ -95,29 +95,26 @@ function Kiosks() {
   const [isOpensuccessmsgw, setisOpensuccessmsgw] = useState('');
   const [message, setmessage] = useState('');
   const [warmessage, setwarmessage] = useState('');
-  const[order,setorder] = useState("ASC");
+  const [order, setorder] = useState("ASC");
   let valuekioskinfo = '';
+
   const searchKiosk = () => {
-    //console.log(selectreseller);
     console.log(selectcustomer);
     const headers = {
       headers: {
         'Content-Type': 'application/json',
-        //'Authorization': 'jairsjhkgasjhdgahjsfgdjhasdfhafsdjhajgsdhafsdjh',
         'auth': 'ZTEwYWRjMzk0OWJhNTlhYmJlNTZlMDU3ZjIwZjg4M2U6OmVwcGF5OjozMTQ1MDFVVEM='
       }
     }
-
     axios.post(URL + "/GetKioskList", {
       reseller_id: selectreseller,
       customer_id: selectcustomer,
     }, headers).then((response) => {
       console.log(response)
       setData(response.data.data);
-
-
     })
   };
+
   async function getkioskdata() {
     const headers = {
       headers: {
@@ -125,16 +122,11 @@ function Kiosks() {
         'auth': 'ZTEwYWRjMzk0OWJhNTlhYmJlNTZlMDU3ZjIwZjg4M2U6OmVwcGF5OjozMTQ1MDFVVEM='
       }
     }
-
     await axios
       .post(URL + "/GetKioskList", { role: role, reseller_id: '', customer_id: '-1', }, headers)
-
       .then((response) => {
-
         setData(response.data.data);
         //console.log(response)
-
-
       })
       .catch((err) => {
         console.log("AXIOS ERROR: ", err);
@@ -146,33 +138,24 @@ function Kiosks() {
   }, []);
 
   useEffect(() => {
-
     const headers = {
       headers: {
         'Content-Type': 'application/json',
         'auth': 'ZTEwYWRjMzk0OWJhNTlhYmJlNTZlMDU3ZjIwZjg4M2U6OmVwcGF5OjozMTQ1MDFVVEM='
       }
     }
-
     axios
       .post(URL + "/GetCustomerList", { role: role, resellerid: reseller_id, customerid: customerseq, }, headers)
-
       .then((response) => {
-
         setDatas(response.data.data);
         //console.log(response)
-
-
       })
       .catch((err) => {
         console.log("AXIOS ERROR: ", err);
       })
-
   }, []);
 
   async function openModal(resource) {
-
-
     setmodelmresellername(resource.mresellername);
     setmodelmcustomername(resource.mcustomername);
     setmodelmprinterip(resource.mprinterip);
@@ -182,7 +165,6 @@ function Kiosks() {
     setmodelmpayreaderip(resource.mpayreaderip);
     setmodelmpayreaderport(resource.mpayreaderport);
     setmodelmseq(resource.mseq);
-
     const headers = {
       headers: {
         'Content-Type': 'application/json',
@@ -195,7 +177,6 @@ function Kiosks() {
         //setDatas(response.data.data);               
         //console.log(response)
         valuekioskinfo = response.data.data;
-
       })
       .catch((err) => {
         console.log("AXIOS ERROR: ", err);
@@ -220,7 +201,6 @@ function Kiosks() {
     setpA3g(valuekioskinfo.A3gray1);
     setpB4g(valuekioskinfo.B4gray1);
     setpB5g(valuekioskinfo.B5gray1);
-
     setcA4c(valuekioskinfo.A4color2);
     setcA3c(valuekioskinfo.A3color2);
     setcB4c(valuekioskinfo.B4color2);
@@ -229,7 +209,6 @@ function Kiosks() {
     setcA3g(valuekioskinfo.A3gray2);
     setcB4g(valuekioskinfo.B4gray2);
     setcB5g(valuekioskinfo.B5gray2);
-
     setfA4c(valuekioskinfo.A4color3);
     setfA3c(valuekioskinfo.A3color3);
     setfB4c(valuekioskinfo.B4color3);
@@ -238,7 +217,6 @@ function Kiosks() {
     setfA3g(valuekioskinfo.A3gray3);
     setfB4g(valuekioskinfo.B4gray3);
     setfB5g(valuekioskinfo.B5gray3);
-
     setsA4c(valuekioskinfo.A4color4);
     setsA3c(valuekioskinfo.A3color4);
     setsB4c(valuekioskinfo.B4color4);
@@ -247,13 +225,13 @@ function Kiosks() {
     setsA3g(valuekioskinfo.A3gray4);
     setsB4g(valuekioskinfo.B4gray4);
     setsB5g(valuekioskinfo.B5gray4);
-
     setm_PayReaderIP(valuekioskinfo.payreaderip);
     setm_PayReaderPort(valuekioskinfo.payreaderport);
     setm_GmissionFaxID(valuekioskinfo.gmissionfaxid);
     setm_ScreenMsg(valuekioskinfo.screenmsg);
     setm_Prefix(valuekioskinfo.isprefix);
     setlanguagecode(valuekioskinfo.languagecode);
+
     //new
     setvmodelkcustomerseq(valuekioskinfo.customerseq);
     setvlanguagecode(valuekioskinfo.languagecode);
@@ -266,13 +244,13 @@ function Kiosks() {
     //new
     setisOpen(true)
     //set customer
-
     axios.post(URL + "/GetCustomerList", {
       resellerid: valuekioskinfo.resellerid, customerid: '-1'
     }, headers).then((response) => {
       setDatacusm(response.data.data);
     })
   };
+
   const closeModal = () => {
     setisOpen(false)
   };
@@ -284,7 +262,6 @@ function Kiosks() {
         'auth': 'ZTEwYWRjMzk0OWJhNTlhYmJlNTZlMDU3ZjIwZjg4M2U6OmVwcGF5OjozMTQ1MDFVVEM='
       }
     }
-
     axios
       .post(URL + "/SetKioskInfo", {
         seq: modelmseq,
@@ -297,7 +274,6 @@ function Kiosks() {
         payreaderport: vm_PayReaderPort,
         screenmsg: vm_ScreenMsg,
       }, headers)
-
       .then((response) => {
         setisOpensuccessmsg(true);
         setmessage("Succeed");
@@ -307,42 +283,36 @@ function Kiosks() {
         console.log("AXIOS ERROR: ", err);
       })
   };
+
   const showhideMODAL = () => {
     setisOpensuccessmsg(false);
     setisOpen(false);
   };
+
   const showhideMODALw = () => {
     setisOpensuccessmsgw(false);
   };
 
   //partner list
   useEffect(() => {
-
     const headers = {
       headers: {
         'Content-Type': 'application/json',
         'auth': 'ZTEwYWRjMzk0OWJhNTlhYmJlNTZlMDU3ZjIwZjg4M2U6OmVwcGF5OjozMTQ1MDFVVEM='
       }
     }
-
     axios
       .post(URL + "/GetResellerList", { resellerid: '', }, headers)
-
       .then((response) => {
-
         setDatar(response.data.data);
         //console.log(response)
-
-
       })
       .catch((err) => {
         console.log("AXIOS ERROR: ", err);
       })
-
   }, []);
 
   //customer list on reseller id
-
   const getCustomerRecord = (e) => {
     setSelectreseller(e.target.value)
     const headers = {
@@ -356,9 +326,8 @@ function Kiosks() {
     }, headers).then((response) => {
       setDatacus(response.data.data);
     })
-
-
   };
+
   const getCustomerdata = (e) => {
     setvmodelm_resellerid(e.target.value)
     const headers = {
@@ -372,8 +341,6 @@ function Kiosks() {
     }, headers).then((response) => {
       setDatacusm(response.data.data);
     })
-
-
   };
 
   //Pagination
@@ -411,9 +378,9 @@ function Kiosks() {
       return null;
     }
   });
+
   const handleNextbtn = () => {
     setcurrentPage(currentPage + 1);
-
     if (currentPage + 1 > maxPageNumberLimit) {
       setmaxPageNumberLimit(maxPageNumberLimit + pageNumberLimit);
       setminPageNumberLimit(minPageNumberLimit + pageNumberLimit);
@@ -422,7 +389,6 @@ function Kiosks() {
 
   const handlePrevbtn = () => {
     setcurrentPage(currentPage - 1);
-
     if ((currentPage - 1) % pageNumberLimit == 0) {
       setmaxPageNumberLimit(maxPageNumberLimit - pageNumberLimit);
       setminPageNumberLimit(minPageNumberLimit - pageNumberLimit);
@@ -438,32 +404,35 @@ function Kiosks() {
   if (minPageNumberLimit >= 1) {
     pageDecrementBtn = <li onClick={handlePrevbtn}> &hellip; </li>;
   }
-  //sorting
-  const sorting = (col)=>{
-    if(order==="ASC"){
-      const sorted =[...data].sort((a,b)=>
-        a[col].toLowerCase()>b[col].toLowerCase() ? 1 : -1
+
+  const sorting = (col) => {
+    console.log(col)
+    if (order === "ASC") {
+      const sorted = [...data].sort((a, b) =>
+        col === 'payreaderport' ?
+          a[col] > b[col] ? 1 : -1
+          :
+          a[col].toLowerCase() > b[col].toLowerCase() ? 1 : -1
       );
       setData(sorted);
       setorder("DSC");
-
     }
-    if(order==="DSC"){
-      const sorted =[...data].sort((a,b)=>
-        a[col].toLowerCase()>b[col].toLowerCase() ? 1 : -1
+    if (order === "DSC") {
+      const sorted = [...data].sort((b, a) =>
+        col === 'payreaderport' ?
+          a[col] > b[col] ? 1 : -1
+          :
+          a[col].toLowerCase() > b[col].toLowerCase() ? 1 : -1
       );
       setData(sorted);
       setorder("ASC");
-
     }
   };
-
 
   return (
     <main className="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
       <Successmsg msg={message} modal={isOpensuccessmsg} showhide={showhideMODAL}></Successmsg>
       <Warningmsg msg={warmessage} modal={isOpensuccessmsgw} showhide={showhideMODALw}></Warningmsg>
-
       <div className="container-fluid">
         <nav className="navbar navbar-main navbar-expand-lg px-0 shadow-none border-radius-xl" id="navbarBlur" navbar-scroll="true">
           <div className="container-fluid py-1 px-0">
@@ -474,16 +443,13 @@ function Kiosks() {
               </ol>
               <h6 className="font-weight-bolder mb-0">{t('Kiosk Management')}</h6>
             </nav>
-
           </div>
         </nav>
-
         <div className="container-fluid pt-1 py-4 px-0">
           <div className="row">
             <div className="col-lg-12 col-md-12 mb-4">
               <div className="card p-2 px-4">
                 <form action="" className="information_form" onSubmit={(e) => e.preventDefault()}>
-
                   <div className="row mt-3">
                     <div className="col-md-2">
                       <label className="input_label_padding_top">{t('Search')}</label>
@@ -495,7 +461,6 @@ function Kiosks() {
                           {datar.map((item, i) => {
                             return <option value={item.resellerid}>{item.displayname}</option>
                           })}
-
                         </select>
                       </div>
                     </div>
@@ -521,7 +486,6 @@ function Kiosks() {
               </div>
             </div>
           </div>
-
           <div className="row">
             <div className="col-lg-12 col-md-12 mb-4">
               <div className="card p-4">
@@ -533,45 +497,30 @@ function Kiosks() {
                       </div>
                       <div className="col-md-6">
                         <div >
-
                         </div>
                       </div>
                     </div>
                   </div>
-
-
-
-
                   <div className="top-space-search-reslute">
                     <div className="tab-content p-4 pt-0 pb-0">
                       <div className="tab-pane active" id="header" role="tabpanel">
                         <div>
                           <div id="datatable_wrapper" className="information_dataTables dataTables_wrapper dt-bootstrap4 table-responsive">
-
-
                             <table className="display table-bordered dataTable no-footer mt-6">
                               <thead>
                                 <tr role="row">
                                   <th onClick={() => sorting("resellername")} className="text-center sorting_asc tabletextalignment" rowspan="2" tabindex="0" aria-controls="list-dt" colspan="1" aria-sort="ascending" aria-label="Order: activate to sort column descending"><span >{t('Partner')}</span></th>
                                   <th onClick={() => sorting("customername")} className="text-center sorting tabletextalignment" rowspan="2" tabindex="0" aria-controls="list-dt" colspan="1" aria-label="ID: activate to sort column ascending"><span >{t('Customer')}</span></th>
-
                                   <th className="text-center" colspan="4" rowspan="1">{t('Printer')}</th>
                                   <th className="text-center" colspan="2" rowspan="1">{t('PaymentTerminal')}</th>
-
                                 </tr>
                                 <tr role="row">
                                   <th onClick={() => sorting("printerip")} className="text-center sorting" tabindex="0" aria-controls="list-dt" rowspan="1" colspan="1" aria-label="Print&amp;nbsp;Total: activate to sort column ascending">{t('IP')}</th>
-
                                   <th onClick={() => sorting("printermodel")} className="text-center sorting" tabindex="0" aria-controls="list-dt" rowspan="1" colspan="1" aria-label="Color: activate to sort column ascending">{t('Model')}</th>
-
                                   <th onClick={() => sorting("printerserial")} className="text-center sorting" tabindex="0" aria-controls="list-dt" rowspan="1" colspan="1" aria-label="Mono: activate to sort column ascending">{t('Serial')}</th>
                                   <th onClick={() => sorting("printermacaddr")} className="text-center sorting" tabindex="0" aria-controls="list-dt" rowspan="1" colspan="1" aria-label="Copy&amp;nbsp;Total: activate to sort column ascending">{t('MAC')}</th>
-
                                   <th onClick={() => sorting("payreaderip")} className="text-center sorting" tabindex="0" aria-controls="list-dt" rowspan="1" colspan="1" aria-label="Color: activate to sort column ascending">{t('IP')}</th>
                                   <th onClick={() => sorting("payreaderport")} className="text-center sorting" tabindex="0" aria-controls="list-dt" rowspan="1" colspan="1" aria-label="Mono: activate to sort column ascending">{t('Port')}</th>
-
-
-
                                 </tr>
                               </thead>
                               <tbody>
@@ -585,7 +534,6 @@ function Kiosks() {
                                     <td>{item.printermacaddr}</td>
                                     <td>{item.payreaderip}</td>
                                     <td>{item.payreaderport}</td>
-
                                   </tr>
                                 }) : <tr className="odd"><td valign="top" colSpan="8" className="dataTables_empty">{t('No data available')}</td></tr>}
                               </tbody>
@@ -603,7 +551,6 @@ function Kiosks() {
                                 {pageDecrementBtn}
                                 {renderPageNumbers}
                                 {pageIncrementBtn}
-
                                 <li>
                                   <button
                                     onClick={handleNextbtn}
@@ -614,8 +561,6 @@ function Kiosks() {
                                 </li>
                               </ul>
                             </div>
-
-
                             {/* model1 */}
                             <Modal className='modal-box modalPopupCenter' show={isOpen}>
                               <Modal.Header>
@@ -638,9 +583,7 @@ function Kiosks() {
                                       className="mb-3"
                                     >
                                       <Tab eventKey="home" title={t('Basic')}>
-
                                         <div className="formProgress manForm pt-2">
-
                                           <div className="mb-3 mt-3">
                                             <div className="row">
                                               <div className="col-md-4">
@@ -656,7 +599,6 @@ function Kiosks() {
                                               </div>
                                             </div>
                                           </div>
-
                                           <div className="mb-3">
                                             <div className="row">
                                               <div className="col-md-4">
@@ -682,12 +624,10 @@ function Kiosks() {
                                                 <select className='form-select' onChange={(e) => { setvlanguagecode(e.target.value) }} defaultValue={languagecode}>
                                                   <option value="ko-KR">{t('Korean')}</option>
                                                   <option value="en-US" >{t('English')}</option>
-
                                                 </select>
                                               </div>
                                             </div>
                                           </div>
-
                                           <div className="mb-3">
                                             <div className="row">
                                               <div className="col-md-4">
@@ -712,7 +652,6 @@ function Kiosks() {
                                                         <label className="form-check-label" for="radio1">{t('Prefix')}</label>
                                                       </div>
                                                     </div>
-
                                                     <div className="col-md-6">
                                                       <div className="form-check">
                                                         <input type="radio" className="form-check-input" id="radio2" name="optradio" value="0" checked={m_Prefix === 0} onChange={(e) => { setvmodelm_Prefix(e.target.value) }} />
@@ -735,7 +674,6 @@ function Kiosks() {
                                             </div>
                                           </div>
                                         </div>
-
                                         {/* <div className="formProgressBtn">
                                           <div className="row">
                                               <div className="col-md-5">
@@ -751,7 +689,6 @@ function Kiosks() {
                                       <Tab eventKey="profile" title={t('Printer')}>
                                         {/* <form className="pb-0" onSubmit={(e)=>e.preventDefault()}> */}
                                         <div className="formProgress manForm pt-2">
-
                                           <div className="mb-3 mt-3">
                                             <div className="row">
                                               <div className="col-md-4">
@@ -762,7 +699,6 @@ function Kiosks() {
                                               </div>
                                             </div>
                                           </div>
-
                                           <div className="mb-3">
                                             <div className="row">
                                               <div className="col-md-4">
@@ -783,7 +719,6 @@ function Kiosks() {
                                               </div>
                                             </div>
                                           </div>
-
                                           <div className="mb-3">
                                             <div className="row">
                                               <div className="col-md-4">
@@ -800,7 +735,6 @@ function Kiosks() {
                                                 <label className="lablePapding" for="m_topupcomment">{t('output function')}</label>
                                               </div>
                                               <div className="col-md-8">
-
                                                 <div className="row">
                                                   <div className="col-md-6">
                                                     <div className="form-check">
@@ -810,7 +744,6 @@ function Kiosks() {
                                                       </label>
                                                     </div>
                                                   </div>
-
                                                   <div className="col-md-6">
                                                     <div className="form-check">
                                                       <input type="radio" className="form-check-input" id="m_Print2" name="m_Print" value="0" checked={m_Print === 0} />
@@ -820,7 +753,6 @@ function Kiosks() {
                                                     </div>
                                                   </div>
                                                 </div>
-
                                               </div>
                                             </div>
                                           </div>
@@ -830,7 +762,6 @@ function Kiosks() {
                                                 <label className="lablePapding" for="m_topupcomment">{t('Copy function')}</label>
                                               </div>
                                               <div className="col-md-8">
-
                                                 <div className="row">
                                                   <div className="col-md-6">
                                                     <div className="form-check">
@@ -840,7 +771,6 @@ function Kiosks() {
                                                       </label>
                                                     </div>
                                                   </div>
-
                                                   <div className="col-md-6">
                                                     <div className="form-check">
                                                       <input type="radio" className="form-check-input" id="m_Copy2" name="m_Copy" value="0" checked={m_Copy === 0} />
@@ -850,7 +780,6 @@ function Kiosks() {
                                                     </div>
                                                   </div>
                                                 </div>
-
                                               </div>
                                             </div>
                                           </div>
@@ -860,7 +789,6 @@ function Kiosks() {
                                                 <label className="lablePapding" for="m_topupcomment">{t('fax function')}</label>
                                               </div>
                                               <div className="col-md-8">
-
                                                 <div className="row">
                                                   <div className="col-md-6">
                                                     <div className="form-check">
@@ -870,7 +798,6 @@ function Kiosks() {
                                                       </label>
                                                     </div>
                                                   </div>
-
                                                   <div className="col-md-6">
                                                     <div className="form-check">
                                                       <input type="radio" className="form-check-input" id="m_Fax2" name="m_Fax" value="0" checked={m_Fax === 0} />
@@ -880,7 +807,6 @@ function Kiosks() {
                                                     </div>
                                                   </div>
                                                 </div>
-
                                               </div>
                                             </div>
                                           </div>
@@ -890,7 +816,6 @@ function Kiosks() {
                                                 <label className="lablePapding" for="m_topupcomment">{t('scan function')}</label>
                                               </div>
                                               <div className="col-md-8">
-
                                                 <div className="row">
                                                   <div className="col-md-6">
                                                     <div className="form-check">
@@ -898,7 +823,6 @@ function Kiosks() {
                                                       <label className="form-check-label" for="m_Scan1">{t('Used')}</label>
                                                     </div>
                                                   </div>
-
                                                   <div className="col-md-6">
                                                     <div className="form-check">
                                                       <input type="radio" className="form-check-input" id="m_Scan2" name="m_Scan" value="0" checked={m_Scan === 0} />
@@ -908,13 +832,10 @@ function Kiosks() {
                                                     </div>
                                                   </div>
                                                 </div>
-
                                               </div>
                                             </div>
                                           </div>
-
                                         </div>
-
                                         {/* <div className="formProgressBtn">
                                           <div className="row">
                                               <div className="col-md-5">
@@ -930,7 +851,6 @@ function Kiosks() {
                                       <Tab eventKey="cost" title={t('Cost')}>
                                         {/* <form className="pb-0" onSubmit={(e)=>e.preventDefault()}> */}
                                         <div className="formProgress manForm pt-2">
-
                                           <div className="mb-3 mt-3">
                                             <div className="row">
                                               <div className="col-md-4">
@@ -967,7 +887,6 @@ function Kiosks() {
                                               </div>
                                             </div>
                                           </div>
-
                                           <div className="mb-3">
                                             <div className="row">
                                               <div className="col-md-4">
@@ -1040,7 +959,6 @@ function Kiosks() {
                                               </div>
                                             </div>
                                           </div>
-
                                           <div className="mb-3">
                                             <div className="row">
                                               <div className="col-md-4">
@@ -1077,11 +995,7 @@ function Kiosks() {
                                               </div>
                                             </div>
                                           </div>
-
-
-
                                         </div>
-
                                         {/* <div className="formProgressBtn">
                                           <div className="row">
                                               <div className="col-md-5">
@@ -1097,7 +1011,6 @@ function Kiosks() {
                                       <Tab eventKey="reader" title={t('Reader')}>
                                         {/* <form className="pb-0" onSubmit={(e)=>e.preventDefault()}> */}
                                         <div className="formProgress manForm pt-2">
-
                                           <div className="mb-3 mt-3">
                                             <div className="row">
                                               <div className="col-md-4">
@@ -1108,7 +1021,6 @@ function Kiosks() {
                                               </div>
                                             </div>
                                           </div>
-
                                           <div className="mb-3">
                                             <div className="row">
                                               <div className="col-md-4">
@@ -1120,7 +1032,6 @@ function Kiosks() {
                                             </div>
                                           </div>
                                         </div>
-
                                         {/* <div className="formProgressBtn">
                                           <div className="row">
                                               <div className="col-md-5">
@@ -1136,7 +1047,6 @@ function Kiosks() {
                                       <Tab eventKey="fax" title={t('Fax id')}>
                                         {/* <form className="pb-0" onSubmit={(e)=>e.preventDefault()}> */}
                                         <div className="formProgress manForm pt-2">
-
                                           <div className="mb-3 mt-3">
                                             <div className="row">
                                               <div className="col-md-4">
@@ -1148,7 +1058,6 @@ function Kiosks() {
                                             </div>
                                           </div>
                                         </div>
-
                                         {/* <div className="formProgressBtn">
                                           <div className="row">
                                               <div className="col-md-5">
@@ -1161,8 +1070,6 @@ function Kiosks() {
                                           </div>                                                     */}
                                         {/* </form>                                       */}
                                       </Tab>
-
-
                                     </Tabs>
                                     <div className="formProgressBtn">
                                       <div className="row">
@@ -1177,12 +1084,9 @@ function Kiosks() {
                                   </form>
                                   {/*  */}
                                 </div>
-
                               </Modal.Body>
                             </Modal>
                             {/* model1 */}
-
-
                           </div>
                         </div>
                       </div>
@@ -1193,16 +1097,7 @@ function Kiosks() {
             </div>
           </div>
         </div>
-
-
-
-
       </div>
-
-
-
-
-
       <footer className="card footer py-4">
         <div className="container-fluid">
           <div className="row align-items-center justify-content-lg-between">
@@ -1212,7 +1107,6 @@ function Kiosks() {
                 <a href="#!" className="font-weight-bold" target="_blank">EP Pay</a> {t('All rights reserved')}.
               </div>
             </div>
-
           </div>
         </div>
       </footer>
