@@ -17,11 +17,14 @@ function PayReader() {
   const [isOpensuccessmsgw, setisOpensuccessmsgw] = useState(false);
   const [message, setmessage] = useState('');
   const [warmessage, setwarmessage] = useState('');
-  const[order,setorder] = useState("ASC");
+  const [order, setorder] = useState("ASC");
+  const [searchPayReader, setSearchPayReader] = useState('');
+
   const showhideMODAL = () => {
     setisOpensuccessmsg(false);
     setisOpen(false);
   };
+
   const showhideMODALw = () => {
     setisOpensuccessmsgw(false);
   };
@@ -33,7 +36,6 @@ function PayReader() {
         'auth': 'ZTEwYWRjMzk0OWJhNTlhYmJlNTZlMDU3ZjIwZjg4M2U6OmVwcGF5OjozMTQ1MDFVVEM='
       }
     }
-
     await axios
       .post(URL + "/GetPayReaderList", { role: 1, reseller_id: '', customer_name: '' }, headers)
 
@@ -46,14 +48,11 @@ function PayReader() {
   }
 
   useEffect(() => {
-
     getpayreaderdata()
-
   }, []);
 
   // modal
   const [isOpen, setisOpen] = useState(false);
-
   const [mseq, setmseq] = useState('');
   const [mreseller, setmreseller] = useState('');
   const [mcustomer, setmcustomer] = useState('');
@@ -70,6 +69,7 @@ function PayReader() {
   const closeModal = () => {
     setisOpen(false)
   };
+
   function openRegistrationmodal(resource) {
     setmseq(resource.mseq)
     setmreseller(resource.mreseller)
@@ -97,8 +97,8 @@ function PayReader() {
         setDatacus(response.data.data);
       })
     }
-
   }
+
   // modal
   // save data    
   const savepayreader = () => {
@@ -134,21 +134,17 @@ function PayReader() {
     }
 
     const headers = {
-
       headers: {
         'Content-Type': 'application/json',
         'auth': 'ZTEwYWRjMzk0OWJhNTlhYmJlNTZlMDU3ZjIwZjg4M2U6OmVwcGF5OjozMTQ1MDFVVEM='
       }
     }
-
     axios
       .post(URL + "/ExistsPayReader", {
         tid: mtid,
         kiccserial: mkiccserial,
         readerseq: mseq,
-
       }, headers)
-
       .then((response) => {
         if (response.data.success === true) {
           setisOpensuccessmsgw(true);
@@ -166,30 +162,22 @@ function PayReader() {
               customerseq: mcustomerseq,
               location: mlocation
             }, headers)
-
             .then((response) => {
-
               setisOpensuccessmsg(true);
               setmessage("Succeed");
               getpayreaderdata()
-
             })
             .catch((err) => {
               console.log("AXIOS ERROR: ", err);
             })
           //new
-
-
         }
-
-
       })
       .catch((err) => {
         console.log("AXIOS ERROR: ", err);
       })
-
-
   };
+
   // save data
   // search    
   const handelSubmit = (e) => {
@@ -239,8 +227,8 @@ function PayReader() {
     //console.log(rec);
   };
   //reseller list
-  useEffect(() => {
 
+  useEffect(() => {
     const headers = {
       headers: {
         'Content-Type': 'application/json',
@@ -250,22 +238,16 @@ function PayReader() {
 
     axios
       .post(URL + "/GetResellerList", { resellerid: '', }, headers)
-
       .then((response) => {
-
         setDatar(response.data.data);
         //console.log(response)
-
-
       })
       .catch((err) => {
         console.log("AXIOS ERROR: ", err);
       })
-
   }, []);
 
   //customer list on reseller id
-
   const getCustomerRecord = (e) => {
     setmresellerid(e.target.value)
     const headers = {
@@ -279,9 +261,8 @@ function PayReader() {
     }, headers).then((response) => {
       setDatacus(response.data.data);
     })
-
-
   };
+
   //Pagination
   const [currentPage, setcurrentPage] = useState(1);
   const [itemsPerPage, setitemsPerPage] = useState(10);
@@ -317,9 +298,9 @@ function PayReader() {
       return null;
     }
   });
+
   const handleNextbtn = () => {
     setcurrentPage(currentPage + 1);
-
     if (currentPage + 1 > maxPageNumberLimit) {
       setmaxPageNumberLimit(maxPageNumberLimit + pageNumberLimit);
       setminPageNumberLimit(minPageNumberLimit + pageNumberLimit);
@@ -328,7 +309,6 @@ function PayReader() {
 
   const handlePrevbtn = () => {
     setcurrentPage(currentPage - 1);
-
     if ((currentPage - 1) % pageNumberLimit == 0) {
       setmaxPageNumberLimit(maxPageNumberLimit - pageNumberLimit);
       setminPageNumberLimit(minPageNumberLimit - pageNumberLimit);
@@ -344,6 +324,7 @@ function PayReader() {
   if (minPageNumberLimit >= 1) {
     pageDecrementBtn = <li onClick={handlePrevbtn}> &hellip; </li>;
   }
+
   //sorting
   const sorting = (col) => {
     if (order === "ASC") {
@@ -352,19 +333,20 @@ function PayReader() {
       );
       setData(sorted);
       setorder("DSC");
-
     }
     if (order === "DSC") {
-      const sorted = [...data].sort((a, b) =>
+      const sorted = [...data].sort((b, a) =>
         a[col].toLowerCase() > b[col].toLowerCase() ? 1 : -1
       );
       setData(sorted);
       setorder("ASC");
-
     }
   };
 
-
+  const eventCall = (e) => {
+    setSearchPayReader(e.target.value);
+    if (e.target.value === '') { getpayreaderdata() }
+  }
 
   return (
     <main className="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
@@ -380,16 +362,13 @@ function PayReader() {
               </ol>
               <h6 className="font-weight-bolder mb-0">{t('Terminal management')}</h6>
             </nav>
-
           </div>
         </nav>
-
         <div className="container-fluid pt-1 py-4 px-0">
           <div className="row">
             <div className="col-lg-12 col-md-12 mb-4">
               <div className="card p-2 px-4">
                 <form className="information_form" onSubmit={handelSubmit}>
-
                   <div className="row mt-3">
                     <div className="col-md-2">
                       <label className="input_label_padding_top">{t('Search')}</label>
@@ -404,27 +383,24 @@ function PayReader() {
                           <option value="4">{t('Model Name')}</option>
                           <option value="5">{t('Serial No.')}</option>
                           <option value="6">{t('Location')}</option>
-
                         </select>
                       </div>
                     </div>
                     <div className="col-md-3">
                       <div className="input-group">
-                        <input type="text" className="form-control" name='keyword' />
+                        <input type="text" className="form-control" name='keyword' onChange={(e) => { eventCall(e) }} />
                       </div>
                     </div>
                     <div className="col-md-2">
                       <div className="input-group">
-                        <button type="submit" className="btn btn-outline-success allBtnsize">{t('Search')}</button>
+                        <button type="submit" className="btn btn-outline-success allBtnsize" disabled={searchPayReader.length ? false : true}>{t('Search')}</button>
                       </div>
                     </div>
                   </div>
-
                 </form>
               </div>
             </div>
           </div>
-
           <div className="row">
             <div className="col-lg-12 col-md-12 mb-4">
               <div className="card p-4">
@@ -436,18 +412,14 @@ function PayReader() {
                       </div>
                       <div className="col-md-6">
                         <div className="">
-
                         </div>
                       </div>
                     </div>
                   </div>
-
-
                   <div className="top-space-search-reslute">
                     <div className="tab-content p-4 pt-0 pb-0">
                       <div className="tab-pane active" id="header" role="tabpanel">
                         <div id="datatable_wrapper" className="information_dataTables dataTables_wrapper dt-bootstrap4 table-responsive">
-
                           <div className="d-flex exportPopupBtn">
                             <ReactHTMLTableToExcel
                               className="btn button btn-info mx-2"
@@ -502,7 +474,6 @@ function PayReader() {
                               {pageDecrementBtn}
                               {renderPageNumbers}
                               {pageIncrementBtn}
-
                               <li>
                                 <button
                                   onClick={handleNextbtn}
@@ -590,20 +561,14 @@ function PayReader() {
                                       </div>
                                       <div className="col-md-7 d-flex justify-content-end popupbtn_mrgn">
                                         <button type="submit" className="btn btn-sm savepopupbtn" onClick={savepayreader} >{t('Save')}</button>
-
-
                                       </div>
                                     </div>
                                   </div>
                                 </form>
                               </div>
-
                             </Modal.Body>
                           </Modal>
                           {/* registration */}
-
-
-
                         </div>
                       </div>
                     </div>
@@ -613,14 +578,7 @@ function PayReader() {
             </div>
           </div>
         </div>
-
-
-
-
       </div>
-
-
-
       <footer className="card footer py-4">
         <div className="container-fluid">
           <div className="row align-items-center justify-content-lg-between">
@@ -630,7 +588,6 @@ function PayReader() {
                 <a href="#!" className="font-weight-bold" target="_blank">EP Pay</a> {t('All rights reserved')}.
               </div>
             </div>
-
           </div>
         </div>
       </footer>

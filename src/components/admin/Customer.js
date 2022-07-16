@@ -20,6 +20,7 @@ function Customer() {
   const [maxPageNumberLimit, setmaxPageNumberLimit] = useState(5);
   const [minPageNumberLimit, setminPageNumberLimit] = useState(0);
   //language
+
   const { t, i18n } = useTranslation();
   const [currentLanguage, setLanguage] = useState('en');
   const [data, setData] = useState([]);
@@ -28,14 +29,18 @@ function Customer() {
   const [isOpensuccessmsgw, setisOpensuccessmsgw] = useState(false);
   const [message, setmessage] = useState('');
   const [warmessage, setwarmessage] = useState('');
-  const[order,setorder] = useState("ASC"); 
+  const [order, setorder] = useState("ASC");
+  const [searchCustomer, setSearchCustomer] = useState('');
+
   const showhideMODAL = () => {
     setisOpensuccessmsg(false);
     setisOpen(false);
   };
+
   const showhideMODALw = () => {
     setisOpensuccessmsgw(false);
   };
+
   async function getcustomerdata() {
     await axios
       .post(URL + "/GetCustomerList2", { resellerid: '' }, Header)
@@ -58,8 +63,6 @@ function Customer() {
       })
   }
 
-  
-
   useEffect(() => {
     getcustomerdata()
     GetResellerList()
@@ -70,6 +73,7 @@ function Customer() {
   const closeModal = () => {
     setisOpen(false)
   };
+
   function openRegistrationmodal(resource) {
     setmodelcustomerid(resource.mseq)
     setcustomerid(resource.mseq)
@@ -78,10 +82,11 @@ function Customer() {
     setmodelmcomment(resource.mcomment)
     setmodelmresellerid(resource.mresellerid)
     setisOpen(true)
-
   }
+
   // modal
   // save data    
+
   const savecustomer = () => {
     //alert(modelcustomerid);
     if (mdisplayname == '') {
@@ -106,7 +111,6 @@ function Customer() {
         comment: mcomment,
         resellerid: mresellerid
       }, Header)
-
       .then((response) => {
         if (response.data.success === true) {
           setisOpensuccessmsg(true);
@@ -120,9 +124,8 @@ function Customer() {
       .catch((err) => {
         console.log("AXIOS ERROR: ", err);
       })
-
-
   };
+
   // save data
   // search    
   const handelSubmit = (e) => {
@@ -137,17 +140,18 @@ function Customer() {
       .catch((err) => {
         console.log("AXIOS ERROR: ", err);
       })
-
   };
+
   //Pagination
-  
   const handleClick = (event) => {
     setcurrentPage(Number(event.target.id));
   };
+
   const pages = [];
   for (let i = 1; i <= Math.ceil(data.length / itemsPerPage); i++) {
     pages.push(i);
   }
+
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentItems = data.slice(indexOfFirstItem, indexOfLastItem);
@@ -167,6 +171,7 @@ function Customer() {
       return null;
     }
   });
+
   const handleNextbtn = () => {
     setcurrentPage(currentPage + 1);
     if (currentPage + 1 > maxPageNumberLimit) {
@@ -174,6 +179,7 @@ function Customer() {
       setminPageNumberLimit(minPageNumberLimit + pageNumberLimit);
     }
   };
+
   const handlePrevbtn = () => {
     setcurrentPage(currentPage - 1);
     if ((currentPage - 1) % pageNumberLimit == 0) {
@@ -181,33 +187,40 @@ function Customer() {
       setminPageNumberLimit(minPageNumberLimit - pageNumberLimit);
     }
   };
+
   let pageIncrementBtn = null;
   if (pages.length > maxPageNumberLimit) {
     pageIncrementBtn = <li onClick={handleNextbtn}> &hellip; </li>;
   }
+
   let pageDecrementBtn = null;
   if (minPageNumberLimit >= 1) {
     pageDecrementBtn = <li onClick={handlePrevbtn}> &hellip; </li>;
   }
+
   //sorting
-  const sorting = (col)=>{
-    if(order==="ASC"){
-      const sorted =[...data].sort((a,b)=>
-        a[col].toLowerCase()>b[col].toLowerCase() ? 1 : -1
+  const sorting = (col) => {
+    if (order === "ASC") {
+      const sorted = [...data].sort((a, b) =>
+        a[col].toLowerCase() > b[col].toLowerCase() ? 1 : -1
       );
       setData(sorted);
       setorder("DSC");
-
     }
-    if(order==="DSC"){
-      const sorted =[...data].sort((a,b)=>
-        a[col].toLowerCase()>b[col].toLowerCase() ? 1 : -1
+    if (order === "DSC") {
+      const sorted = [...data].sort((b, a) =>
+        a[col].toLowerCase() > b[col].toLowerCase() ? 1 : -1
       );
       setData(sorted);
       setorder("ASC");
-
     }
   };
+
+  const eventCall = (e) => {
+    setSearchCustomer(e.target.value);
+    if (e.target.value === '') { getcustomerdata(); GetResellerList() }
+  }
+
   return (
     <main className="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
       <Successmsg msg={message} modal={isOpensuccessmsg} showhide={showhideMODAL}></Successmsg>
@@ -222,17 +235,13 @@ function Customer() {
               </ol>
               <h6 className="font-weight-bolder mb-0">{t('Customer')}</h6>
             </nav>
-
           </div>
         </nav>
-
         <div className="container-fluid pt-1 py-4 px-0">
           <div className="row">
             <div className="col-lg-12 col-md-12 mb-4">
               <div className="card p-2 px-4">
                 <form className="information_form" onSubmit={handelSubmit}>
-
-
                   <div className="row mt-3">
                     <div className="col-md-2">
                       <label className="input_label_padding_top">{t('Search')}</label>
@@ -242,27 +251,24 @@ function Customer() {
                         <select className="classNameic form-select select_options align-left" name='searchtype'>
                           <option value="1">{t('CustomerName')}</option>
                           <option value="2">{t('PatnerName')}</option>
-
                         </select>
                       </div>
                     </div>
                     <div className="col-md-3">
                       <div className="input-group">
-                        <input type="text" className="form-control" name='keyword' />
+                        <input type="text" className="form-control" name='keyword' onChange={(e) => { eventCall(e) }} />
                       </div>
                     </div>
                     <div className="col-md-2">
                       <div className="input-group">
-                        <button type="submit" className="btn btn-outline-success allBtnsize">{t('Search')}</button>
+                        <button type="submit" className="btn btn-outline-success allBtnsize" disabled={searchCustomer.length ? false : true}>{t('Search')}</button>
                       </div>
                     </div>
                   </div>
-
                 </form>
               </div>
             </div>
           </div>
-
           <div className="row">
             <div className="col-lg-12 col-md-12 mb-4">
               <div className="card p-4">
@@ -274,18 +280,14 @@ function Customer() {
                       </div>
                       <div className="col-md-6">
                         <div className="">
-
                         </div>
                       </div>
                     </div>
                   </div>
-
-
                   <div className="top-space-search-reslute">
                     <div className="tab-content p-4 pt-0 pb-0">
                       <div className="tab-pane active" id="header" role="tabpanel">
                         <div id="datatable_wrapper" className="information_dataTables dataTables_wrapper dt-bootstrap4 table-responsive">
-
                           <div className="d-flex exportPopupBtn">
                             <a className="btn button btn-info" onClick={() => openRegistrationmodal({ mseq: '', mdisplayname: '', mcomment: '', mresellername: '', mresellerid: '' })}>{t('Registration')}</a>
                           </div>
@@ -320,7 +322,6 @@ function Customer() {
                               {pageDecrementBtn}
                               {renderPageNumbers}
                               {pageIncrementBtn}
-
                               <li>
                                 <button
                                   onClick={handleNextbtn}
@@ -377,20 +378,14 @@ function Customer() {
                                       </div>
                                       <div className="col-md-7 d-flex justify-content-end popupbtn_mrgn">
                                         <button type="submit" className="btn btn-sm savepopupbtn" onClick={savecustomer} >{t('Save')}</button>
-
-
                                       </div>
                                     </div>
                                   </div>
                                 </form>
                               </div>
-
                             </Modal.Body>
                           </Modal>
                           {/* registration */}
-
-
-
                         </div>
                       </div>
                     </div>
@@ -400,14 +395,7 @@ function Customer() {
             </div>
           </div>
         </div>
-
-
-
-
       </div>
-
-
-
       <footer className="card footer py-4">
         <div className="container-fluid">
           <div className="row align-items-center justify-content-lg-between">
@@ -417,7 +405,6 @@ function Customer() {
                 <a href="#!" className="font-weight-bold" target="_blank">EP Pay</a> {t('All rights reserved')}.
               </div>
             </div>
-
           </div>
         </div>
       </footer>
