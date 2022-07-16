@@ -3,7 +3,7 @@ import {initReactI18next} from 'react-i18next';
 import en from './en.json';
 import ko from './ko.json';
 var userLang = navigator.language || navigator.userLanguage;
-if(userLang=='en'){
+if(userLang=='en-US'){
   var lang = 'en';
 }else{
   var lang = 'ko';
