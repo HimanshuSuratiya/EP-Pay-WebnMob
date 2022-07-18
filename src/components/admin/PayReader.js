@@ -327,16 +327,23 @@ function PayReader() {
 
   //sorting
   const sorting = (col) => {
+    console.log(col)
     if (order === "ASC") {
       const sorted = [...data].sort((a, b) =>
-        a[col].toLowerCase() > b[col].toLowerCase() ? 1 : -1
+        col === 'seq' ?
+          a[col] > b[col] ? 1 : -1
+          :
+          a[col].toLowerCase() > b[col].toLowerCase() ? 1 : -1
       );
       setData(sorted);
       setorder("DSC");
     }
     if (order === "DSC") {
       const sorted = [...data].sort((b, a) =>
-        a[col].toLowerCase() > b[col].toLowerCase() ? 1 : -1
+        col === 'seq' ?
+          a[col] > b[col] ? 1 : -1
+          :
+          a[col].toLowerCase() > b[col].toLowerCase() ? 1 : -1
       );
       setData(sorted);
       setorder("ASC");

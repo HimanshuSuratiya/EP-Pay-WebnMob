@@ -96,6 +96,7 @@ function Kiosks() {
   const [message, setmessage] = useState('');
   const [warmessage, setwarmessage] = useState('');
   const [order, setorder] = useState("ASC");
+  const [searchKiosksData, setSearchKiosksData] = useState('');
   let valuekioskinfo = '';
 
   const searchKiosk = () => {
@@ -315,6 +316,10 @@ function Kiosks() {
   //customer list on reseller id
   const getCustomerRecord = (e) => {
     setSelectreseller(e.target.value)
+    setSearchKiosksData(e.target.value);
+    if (e.target.value === '') {
+      getkioskdata()
+    }
     const headers = {
       headers: {
         'Content-Type': 'application/json',
@@ -478,7 +483,7 @@ function Kiosks() {
                     </div>
                     <div className="col-md-2">
                       <div className="input-group">
-                        <button className="btn btn-outline-success allBtnsize" onClick={searchKiosk}>{t('Search')}</button>
+                        <button className="btn btn-outline-success allBtnsize" onClick={searchKiosk} disabled={searchKiosksData === '' ? true : false}>{t('Search')}</button>
                       </div>
                     </div>
                   </div>

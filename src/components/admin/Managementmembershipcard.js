@@ -52,6 +52,7 @@ function Managementmembershipcard() {
   const [mtopupcomment, setMtopupcomment] = useState('');
   const [checkcardnum, setCheckcardnum] = useState('');
   const [order, setorder] = useState("ASC");
+  const [searchMembershipCard, setSearchMembershipCard] = useState('');
 
   useEffect(() => {
     const headers = {
@@ -459,12 +460,15 @@ function Managementmembershipcard() {
     }
   };
 
+  const eventCall = (e) => {
+    setSearchMembershipCard(e.target.value);
+    if (e.target.value === '') { GetMFcardList() }
+  }
 
   return (
     <main className="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
       <Successmsg msg={message} modal={isOpensuccessmsg} showhide={showhideMODAL}></Successmsg>
       <Warningmsg msg={warmessage} modal={isOpensuccessmsgw} showhide={showhideMODALw}></Warningmsg>
-
       <div className="container-fluid">
         <nav className="navbar navbar-main navbar-expand-lg px-0 shadow-none border-radius-xl" id="navbarBlur" navbar-scroll="true">
           <div className="container-fluid py-1 px-0">
@@ -475,19 +479,13 @@ function Managementmembershipcard() {
               </ol>
               <h6 className="font-weight-bolder mb-0">{t('Membership card management')}</h6>
             </nav>
-
           </div>
         </nav>
-
-
-
-
         <div className="container-fluid pt-1 py-4 px-0">
           <div class="row">
             <div class="col-lg-12 col-md-12 mb-4">
               <div class="card p-2 px-4">
                 <form class="information_form" onSubmit={handelSubmit}>
-
                   <div class="row mt-3">
                     <div class="col-md-2">
                       <label class="input_label_padding_top">{t('Search')}</label>
@@ -499,7 +497,6 @@ function Managementmembershipcard() {
                           {datareseller.map((item, i) => {
                             return <option value={item.displayname}>{item.displayname}</option>
                           })}
-
                         </select>
                       </div>
                     </div>
@@ -518,22 +515,19 @@ function Managementmembershipcard() {
                     </div>
                     <div class="col-md-3">
                       <div class="input-group">
-                        <input type="text" className="form-control padingtop" name='keyword' placeholder="" />
+                        <input type="text" className="form-control padingtop" name='keyword' placeholder="" onChange={(e) => { eventCall(e) }} />
                       </div>
                     </div>
                     <div class="col-md-2">
                       <div class="input-group">
-                        <button type="submit" class="btn btn-outline-success allBtnsize" >{t('Search')}</button>
+                        <button type="submit" class="btn btn-outline-success allBtnsize" disabled={searchMembershipCard === '' ? true : false}>{t('Search')}</button>
                       </div>
                     </div>
                   </div>
-
                 </form>
               </div>
             </div>
           </div>
-
-
           <div className="row">
             <div className="col-lg-12 col-md-12 mb-4">
               <div className="card p-4">
@@ -545,25 +539,18 @@ function Managementmembershipcard() {
                       </div>
                       <div className="col-md-6">
                         <div className="">
-
                         </div>
                       </div>
                     </div>
                   </div>
-
-
-
                   <div className="top-space-search-reslute">
                     <div className="tab-content p-4 pt-0">
                       <div className="tab-pane active" id="header" role="tabpanel">
-
                         <div id="datatable_wrapper" className="information_dataTables dataTables_wrapper dt-bootstrap4 table-responsive">
                           <div className="d-flex exportPopupBtn">
                             <a className="btn button btn-info mx-2" onClick={openModal}>{t('Enrollment')}</a>
                             <a className="btn button btn-info" onClick={openModalc}>{t('Change')}</a>
                           </div>
-
-
                           <table className="display table-bordered dataTable no-footer mt-6">
                             <thead>
                               <tr>
@@ -573,7 +560,6 @@ function Managementmembershipcard() {
                                 <th onClick={() => sorting("cardnum")} className="text-center sorting">{t('Internal number')}</th>
                                 <th onClick={() => sorting("lastupdate")} className="text-center sorting">{t('Last Used Date')}</th>
                                 <th onClick={() => sorting("description")} className="text-center sorting">{t('Card Description')} </th>
-
                               </tr>
                             </thead>
                             <tbody>
@@ -587,9 +573,7 @@ function Managementmembershipcard() {
                                   <td>{item.description}</td>
                                 </tr>
                               }) : <tr className="odd"><td valign="top" colSpan="6" className="dataTables_empty">{t('No data available')}</td></tr>}
-
                             </tbody>
-
                           </table>
                           <div>
                             <ul className="pageNumbers">
@@ -604,7 +588,6 @@ function Managementmembershipcard() {
                               {pageDecrementBtn}
                               {renderPageNumbers}
                               {pageIncrementBtn}
-
                               <li>
                                 <button
                                   onClick={handleNextbtn}
@@ -644,12 +627,10 @@ function Managementmembershipcard() {
                                               <label className="lablePapding" for="email">{t('Partner')}</label>
                                             </div>
                                             <div className="col-md-8">
-
                                               <select className="form-select padingtop" onChange={(e) => { setModelupdatern(e.target.value) }}>
                                                 {datareseller.map(item => {
                                                   return <option value={item.resellerid}>{item.displayname}</option>
                                                 })}
-
                                               </select>
                                             </div>
                                           </div>
@@ -695,7 +676,6 @@ function Managementmembershipcard() {
                                           </div>
                                         </div>
                                       </div>
-
                                       <div className="formProgressBtn">
                                         <div className="row">
                                           <div className="col-md-5">
@@ -713,7 +693,6 @@ function Managementmembershipcard() {
                                       <div className="formProgress manForm pt-2">
                                         <div className="input-group mb-3">
                                           <input type="file" className="form-control" onChange={(e) => { setModelimportmfcard(e.target.files[0]) }} />
-
                                         </div>
                                         <div className="input-group mb-3">
                                           ※ {t('For Excel items, please enter the card number, amount, and reason for recharging from the first line')} .
@@ -731,11 +710,9 @@ function Managementmembershipcard() {
                                       </div>
                                     </form>
                                   </Tab>
-
                                 </Tabs>
                                 {/*  */}
                               </div>
-
                             </Modal.Body>
                           </Modal>
                           {/* model1 */}
@@ -762,7 +739,6 @@ function Managementmembershipcard() {
                                   <Tab eventKey="home" title={t('individual charge')}>
                                     <form className="pb-0" onSubmit={(e) => e.preventDefault()}>
                                       <div className="formProgress manForm pt-2">
-
                                         <div className="mb-3 mt-3">
                                           <div className="row">
                                             <div className="col-md-4">
@@ -773,7 +749,6 @@ function Managementmembershipcard() {
                                             </div>
                                           </div>
                                         </div>
-
                                         <div className="mb-3">
                                           <div className="row">
                                             <div className="col-md-4">
@@ -795,7 +770,6 @@ function Managementmembershipcard() {
                                           </div>
                                         </div>
                                       </div>
-
                                       <div className="formProgressBtn">
                                         <div className="row">
                                           <div className="col-md-5">
@@ -813,7 +787,6 @@ function Managementmembershipcard() {
                                       <div className="formProgress manForm pt-2">
                                         <div className="input-group mb-3">
                                           <input type="file" className="form-control" placeholder="Search" />
-
                                         </div>
                                         <div className="input-group mb-3">
                                           ※ {t('For Excel items, please enter the card number, amount, and reason for recharging from the first line')}.
@@ -831,11 +804,9 @@ function Managementmembershipcard() {
                                       </div>
                                     </form>
                                   </Tab>
-
                                 </Tabs>
                                 {/*  */}
                               </div>
-
                             </Modal.Body>
                           </Modal>
                           {/* model2 */}
@@ -861,7 +832,6 @@ function Managementmembershipcard() {
                                 >
                                   <Tab eventKey="home" title={t('Individual Registration & Editing individual charge')}>
                                     <form className="pb-0" onSubmit={(e) => e.preventDefault()}>
-
                                       <div className="formProgress manForm pt-2">
                                         <div className="mb-3 mt-3">
                                           <div className="row">
@@ -874,7 +844,6 @@ function Managementmembershipcard() {
                                                 {datareseller.map(item => {
                                                   return <option value={item.resellerid}>{item.displayname}</option>
                                                 })}
-
                                               </select>
                                             </div>
                                           </div>
@@ -887,7 +856,6 @@ function Managementmembershipcard() {
                                             <div className="col-md-8">
                                               {/* <span>{modelComment}</span> */}
                                               <input type="text" className="form-control" onChange={(e) => { setmodelComment(e.target.value) }} defaultValue={modelComment} />
-
                                             </div>
                                           </div>
                                         </div>
@@ -899,7 +867,6 @@ function Managementmembershipcard() {
                                             <div className="col-md-8">
                                               {/* <span>{modelTCardnum}</span> */}
                                               <input type="text" className="form-control" onChange={(e) => { setmodelTCardnum(e.target.value) }} defaultValue={modelTCardnum} />
-
                                             </div>
                                           </div>
                                         </div>
@@ -910,7 +877,6 @@ function Managementmembershipcard() {
                                             </div>
                                             <div className="col-md-8">
                                               <span>{modelBalance}</span>
-
                                             </div>
                                           </div>
                                         </div>
@@ -925,7 +891,6 @@ function Managementmembershipcard() {
                                           </div>
                                         </div>
                                       </div>
-
                                       <div className="formProgressBtn">
                                         <div className="row">
                                           <div className="col-md-5">
@@ -943,7 +908,6 @@ function Managementmembershipcard() {
                                       <div className="formProgress manForm pt-2">
                                         <div className="input-group mb-3">
                                           <input type="file" className="form-control" placeholder="Search" />
-
                                         </div>
                                         <div className="input-group mb-3">
                                           ※ {t('For Excel items, please enter the card number, amount, and reason for recharging from the first line')}.
@@ -961,18 +925,13 @@ function Managementmembershipcard() {
                                       </div>
                                     </form>
                                   </Tab>
-
                                 </Tabs>
                                 {/*  */}
                               </div>
-
                             </Modal.Body>
                           </Modal>
                           {/* model3 */}
-
-
                         </div>
-
                       </div>
                     </div>
                   </div>
@@ -980,16 +939,8 @@ function Managementmembershipcard() {
               </div>
             </div>
           </div>
-
         </div>
-
-
-
-
       </div>
-
-
-
       <footer className="card footer py-4">
         <div className="container-fluid">
           <div className="row align-items-center justify-content-lg-between">
@@ -999,7 +950,6 @@ function Managementmembershipcard() {
                 <a href="#!" className="font-weight-bold" target="_blank">EP Pay</a> {t('All rights reserved')}.
               </div>
             </div>
-
           </div>
         </div>
       </footer>
