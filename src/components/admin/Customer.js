@@ -250,7 +250,7 @@ function Customer() {
                       <div className="input-group">
                         <select className="classNameic form-select select_options align-left" name='searchtype'>
                           <option value="1">{t('CustomerName')}</option>
-                          <option value="2">{t('PatnerName')}</option>
+                          <option value="2">{t('PartnerName')}</option>
                         </select>
                       </div>
                     </div>
@@ -296,7 +296,7 @@ function Customer() {
                               <tr>
                                 <th onClick={() => sorting("displayname")} className="text-center sorting">{t('CustomerName')}</th>
                                 <th onClick={() => sorting("comment")} className="text-center sorting">{t('Memo')}</th>
-                                <th onClick={() => sorting("resellername")} className="text-center sorting">{t('PatnerName')}</th>
+                                <th onClick={() => sorting("resellername")} className="text-center sorting">{t('PartnerName')}</th>
                               </tr>
                             </thead>
                             <tbody>
@@ -360,11 +360,11 @@ function Customer() {
                                       </div>
                                     </div>
                                     <div className='row mb-3'>
-                                      <div className='col-md-4'><span>{t('PatnerName')}</span></div>
+                                      <div className='col-md-4'><span>{t('PartnerName')}</span></div>
                                       <div className='col-md-8'>
                                         <select className='form-select' value={mresellerid} onChange={(e) => { setmodelmresellerid(e.target.value) }}>
                                           <option value="">{t('PleaseSelectAnItem')}</option>
-                                          {data.map((item, i) => {
+                                          {datar.map((item, i) => {
                                             return <option value={item.resellerid}>{item.displayname}</option>
                                           })}
                                         </select>

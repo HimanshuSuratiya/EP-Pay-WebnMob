@@ -6,6 +6,7 @@ import Warningmsg from "../partner/warning";
 import ReactHTMLTableToExcel from 'react-html-table-to-excel';
 import { URL } from "../URL/url";
 import { useTranslation } from 'react-i18next';
+import { CSVLink } from "react-csv";
 function Loginuser() {
   //language
   const { t, i18n } = useTranslation();
@@ -75,6 +76,17 @@ function Loginuser() {
   const closeModal = () => {
     setisOpen(false)
   };
+
+  const headerss = [(data)];
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await axios.get(URL);
+      const responseData = await response.data.Table;
+      console.log(responseData);
+      setData(responseData);
+    };
+    fetchData();
+  }, []);
 
   function openRegistrationmodal(resource) {
     setmseq(resource.mseq)
@@ -383,12 +395,9 @@ function Loginuser() {
                       <div className="tab-pane active" id="header" role="tabpanel">
                         <div id="datatable_wrapper" className="information_dataTables dataTables_wrapper dt-bootstrap4 table-responsive">
                           <div className="d-flex exportPopupBtn">
-                            <ReactHTMLTableToExcel
-                              className="btn button btn-info mx-2"
-                              table="example"
-                              filename="ReportExcel"
-                              sheet="Sheet"
-                              buttonText={t('Export')} />
+                            <CSVLink headerss={headerss} data={data} filename="bsedata.csv">
+                              <button className="btn button btn-info mx-2" >Export</button>
+                            </CSVLink>
                             <a className="btn button btn-info" onClick={() => openRegistrationmodal({ mseq: '', muserid: '' })}>{t('Registration')}</a>
                           </div>
                           <table className="display table-bordered dataTable no-footer mt-6">
@@ -460,19 +469,19 @@ function Loginuser() {
                                       </div>
                                     </div>
                                     <div className='row mb-3'>
-                                      <div className='col-md-4'><span>{t('password')}</span></div>
+                                      <div className='col-md-4'><span>{t('Password')}</span></div>
                                       <div className='col-md-8'>
                                         <input type="password" className="form-control" onChange={(e) => { setPassword(e.target.value) }} />
                                       </div>
                                     </div>
                                     <div className='row mb-3'>
-                                      <div className='col-md-4'><span>{t('name')}</span></div>
+                                      <div className='col-md-4'><span>{t('Name')}</span></div>
                                       <div className='col-md-8'>
                                         <input type="text" className="form-control" onChange={(e) => { setDisplayName(e.target.value) }} defaultValue={mdisplayname} />
                                       </div>
                                     </div>
                                     <div className='row mb-3'>
-                                      <div className='col-md-4'><span>{t('role')}</span></div>
+                                      <div className='col-md-4'><span>{t('Role')}</span></div>
                                       <div className='col-md-8'>
                                         <select className='form-select' onChange={rolechange} value={mrole}>
                                           <option value=''>{t('Role')}</option>
@@ -483,7 +492,7 @@ function Loginuser() {
                                       </div>
                                     </div>
                                     <div className='row mb-3'>
-                                      <div className='col-md-4'><span>{t('partner')}</span></div>
+                                      <div className='col-md-4'><span>{t('Partner')}</span></div>
                                       <div className='col-md-8'>
                                         <select className='form-select' value={mpartnerid} onChange={getCustomerRecord}>
                                           <option value="">{t('partner')}</option>
@@ -494,7 +503,7 @@ function Loginuser() {
                                       </div>
                                     </div>
                                     <div className='row mb-3'>
-                                      <div className='col-md-4'><span>{t('customer')}</span></div>
+                                      <div className='col-md-4'><span>{t('Customer')}</span></div>
                                       <div className='col-md-8'>
                                         <select className="form-select" onChange={(e) => { setCustomerid(e.target.value) }} value={mcustomerid} >
                                           <option value="">{t('customer')}</option>

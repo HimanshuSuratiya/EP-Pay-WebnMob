@@ -697,7 +697,7 @@ function Kiosks() {
                                           <div className="mb-3 mt-3">
                                             <div className="row">
                                               <div className="col-md-4">
-                                                <label className="lablePapding" for="email">{t('IP address')}</label>
+                                                <label className="lablePapding" for="email">{t('IPAddress')}</label>
                                               </div>
                                               <div className="col-md-8">
                                                 <span>{mPrinterIP}</span>
@@ -707,7 +707,7 @@ function Kiosks() {
                                           <div className="mb-3">
                                             <div className="row">
                                               <div className="col-md-4">
-                                                <label className="lablePapding" for="m_topupcost">{t('Model name')}</label>
+                                                <label className="lablePapding" for="m_topupcost">{t('ModelName')}</label>
                                               </div>
                                               <div className="col-md-8">
                                                 <span>{m_PrinterModel}</span>
@@ -727,7 +727,7 @@ function Kiosks() {
                                           <div className="mb-3">
                                             <div className="row">
                                               <div className="col-md-4">
-                                                <label className="lablePapding" for="m_topupcomment">{t('mac address')}</label>
+                                                <label className="lablePapding" for="m_topupcomment">{t('MacAddress')}</label>
                                               </div>
                                               <div className="col-md-8">
                                                 <span>{m_PrinterMAC}</span>
@@ -737,7 +737,7 @@ function Kiosks() {
                                           <div className="mb-3">
                                             <div className="row">
                                               <div className="col-md-4">
-                                                <label className="lablePapding" for="m_topupcomment">{t('output function')}</label>
+                                                <label className="lablePapding" for="m_topupcomment">{t('OutputFunction')}</label>
                                               </div>
                                               <div className="col-md-8">
                                                 <div className="row">
@@ -764,7 +764,7 @@ function Kiosks() {
                                           <div className="mb-3">
                                             <div className="row">
                                               <div className="col-md-4">
-                                                <label className="lablePapding" for="m_topupcomment">{t('Copy function')}</label>
+                                                <label className="lablePapding" for="m_topupcomment">{t('CopyFunction')}</label>
                                               </div>
                                               <div className="col-md-8">
                                                 <div className="row">
@@ -791,7 +791,7 @@ function Kiosks() {
                                           <div className="mb-3">
                                             <div className="row">
                                               <div className="col-md-4">
-                                                <label className="lablePapding" for="m_topupcomment">{t('fax function')}</label>
+                                                <label className="lablePapding" for="m_topupcomment">{t('FaxFunction')}</label>
                                               </div>
                                               <div className="col-md-8">
                                                 <div className="row">
@@ -818,7 +818,7 @@ function Kiosks() {
                                           <div className="mb-3">
                                             <div className="row">
                                               <div className="col-md-4">
-                                                <label className="lablePapding" for="m_topupcomment">{t('scan function')}</label>
+                                                <label className="lablePapding" for="m_topupcomment">{t('ScanFunction')}</label>
                                               </div>
                                               <div className="col-md-8">
                                                 <div className="row">
@@ -859,7 +859,7 @@ function Kiosks() {
                                           <div className="mb-3 mt-3">
                                             <div className="row">
                                               <div className="col-md-4">
-                                                <label className="lablePapding" for="email">{t('Printing cost')}</label>
+                                                <label className="lablePapding" for="email">{t('PrintingCost')}</label>
                                               </div>
                                               <div className="col-md-8">
                                                 <table className="table table-bordered border">
@@ -1019,7 +1019,7 @@ function Kiosks() {
                                           <div className="mb-3 mt-3">
                                             <div className="row">
                                               <div className="col-md-4">
-                                                <label className="lablePapding" for="email">{t('IP address')}</label>
+                                                <label className="lablePapding" for="email">{t('IPAddress')}</label>
                                               </div>
                                               <div className="col-md-8">
                                                 <input type="text" className="form-control" onChange={(e) => { setvm_PayReaderIP(e.target.value) }} defaultValue={m_PayReaderIP} />
@@ -1029,7 +1029,7 @@ function Kiosks() {
                                           <div className="mb-3">
                                             <div className="row">
                                               <div className="col-md-4">
-                                                <label className="lablePapding" for="m_topupcost">{t('port number')}</label>
+                                                <label className="lablePapding" for="m_topupcost">{t('PortNumber')}</label>
                                               </div>
                                               <div className="col-md-8">
                                                 <input type="text" className="form-control" onChange={(e) => { setvm_PayReaderPort(e.target.value) }} defaultValue={m_PayReaderPort} />
@@ -1055,7 +1055,7 @@ function Kiosks() {
                                           <div className="mb-3 mt-3">
                                             <div className="row">
                                               <div className="col-md-4">
-                                                <label className="lablePapding" for="email">{t('jimission multifunction device ID')} </label>
+                                                <label className="lablePapding" for="email">{t('JimissionMultifunctionDeviceID')} </label>
                                               </div>
                                               <div className="col-md-8">
                                                 <span>{m_GmissionFaxID}</span>

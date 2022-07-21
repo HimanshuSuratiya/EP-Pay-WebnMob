@@ -268,7 +268,7 @@ function Managementmembershipcard() {
       ))
     }
     setData(rec)
-    //console.log(rec);
+    setcurrentPage(1)
   };
 
   const showhideMODAL = () => {
@@ -648,7 +648,7 @@ function Managementmembershipcard() {
                                         <div className="mb-3 mt-3">
                                           <div className="row">
                                             <div className="col-md-4">
-                                              <label className="lablePapding" for="email">{t('Internal number')}</label>
+                                              <label className="lablePapding" for="email">{t('InternalNumber')}</label>
                                             </div>
                                             <div className="col-md-8">
                                               <input type="text" className="form-control" id="updatecomment" onChange={(e) => { setModelupdatecardnum(e.target.value) }} />
@@ -658,7 +658,7 @@ function Managementmembershipcard() {
                                         <div className="mb-3">
                                           <div className="row">
                                             <div className="col-md-4">
-                                              <label className="lablePapding" for="email">{t('balance')}balance</label>
+                                              <label className="lablePapding" for="email">{t('Balance')}</label>
                                             </div>
                                             <div className="col-md-8">
                                               <input type="text" className="form-control" id="updatebalance" onChange={(e) => { setModelupdatebalance(e.target.value) }} />
@@ -873,7 +873,7 @@ function Managementmembershipcard() {
                                         <div className="mb-3">
                                           <div className="row">
                                             <div className="col-md-4">
-                                              <label className="lablePapding" for="email">{t('balance')}</label>
+                                              <label className="lablePapding" for="email">{t('Balance')}</label>
                                             </div>
                                             <div className="col-md-8">
                                               <span>{modelBalance}</span>

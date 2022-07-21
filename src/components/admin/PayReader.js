@@ -3,6 +3,7 @@ import axios from "axios";
 import { Modal } from "react-bootstrap";
 import Successmsg from "../partner/success";
 import Warningmsg from "../partner/warning";
+import { CSVLink } from "react-csv";
 import { URL } from "../URL/url";
 import ReactHTMLTableToExcel from 'react-html-table-to-excel';
 import { useTranslation } from 'react-i18next';
@@ -19,6 +20,17 @@ function PayReader() {
   const [warmessage, setwarmessage] = useState('');
   const [order, setorder] = useState("ASC");
   const [searchPayReader, setSearchPayReader] = useState('');
+
+  const headerss = [(data)];
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await axios.get(URL);
+      const responseData = await response.data.Table;
+      console.log(responseData);
+      setData(responseData);
+    };
+    fetchData();
+  }, []);
 
   const showhideMODAL = () => {
     setisOpensuccessmsg(false);
@@ -122,12 +134,12 @@ function PayReader() {
       setwarmessage("TID is required.");
       return;
     }
-    if (mreseller == '') {
+    if (mresellerid == '') {
       setisOpensuccessmsgw(true);
       setwarmessage("Please select a partner.");
       return;
     }
-    if (mcustomer == '') {
+    if (mcustomerseq == '') {
       setisOpensuccessmsgw(true);
       setwarmessage("Please select a customer.");
       return;
@@ -428,12 +440,9 @@ function PayReader() {
                       <div className="tab-pane active" id="header" role="tabpanel">
                         <div id="datatable_wrapper" className="information_dataTables dataTables_wrapper dt-bootstrap4 table-responsive">
                           <div className="d-flex exportPopupBtn">
-                            <ReactHTMLTableToExcel
-                              className="btn button btn-info mx-2"
-                              table="example"
-                              filename="ReportExcel"
-                              sheet="Sheet"
-                              buttonText={t('Export')} />
+                            <CSVLink headerss={headerss} data={data} filename="bsedata.csv">
+                              <button className="btn button btn-info mx-2" >Export</button>
+                            </CSVLink>
                             <a className="btn button btn-info" onClick={() => openRegistrationmodal({ mseq: '-1', mreseller: '', mcustomer: '', mlocation: '', mtid: '', mkiccmodel: '', mkiccver: '', mkiccserial: '', mlastupdate: '', mactivetime: '', mcustomerseq: '', mresellerid: '' })}>{t('Registration')}</a>
                           </div>
                           <table className="display table-bordered dataTable no-footer mt-6">
@@ -519,7 +528,7 @@ function PayReader() {
                                       </div>
                                     </div>
                                     <div className='row mb-3'>
-                                      <div className='col-md-4'><span>{t('version')}</span></div>
+                                      <div className='col-md-4'><span>{t('Version')}</span></div>
                                       <div className='col-md-8'>
                                         <input type="text" className="form-control" onChange={(e) => { setmkiccver(e.target.value) }} defaultValue={(mkiccver !== '') ? mkiccver : '4108'} />
                                       </div>
@@ -531,7 +540,7 @@ function PayReader() {
                                       </div>
                                     </div>
                                     <div className='row mb-3'>
-                                      <div className='col-md-4'><span>{t('partner')}</span></div>
+                                      <div className='col-md-4'><span>{t('Partner')}</span></div>
                                       <div className='col-md-8'>
                                         <select className='form-select' value={mresellerid} onChange={getCustomerRecord}>
                                           <option value="">{t('Please select an item')}</option>
@@ -542,7 +551,7 @@ function PayReader() {
                                       </div>
                                     </div>
                                     <div className='row mb-3'>
-                                      <div className='col-md-4'><span>{t('customer')}</span></div>
+                                      <div className='col-md-4'><span>{t('Customer')}</span></div>
                                       <div className='col-md-8'>
                                         <select className="form-select" onChange={(e) => { setmcustomerseq(e.target.value) }} value={mcustomerseq} placeholder='Please select an item.'>
                                           <option value="">{t('Please select an item')}</option>
@@ -555,7 +564,7 @@ function PayReader() {
                                       </div>
                                     </div>
                                     <div className='row mb-3'>
-                                      <div className='col-md-4'><span>{t('location')}</span></div>
+                                      <div className='col-md-4'><span>{t('Location')}</span></div>
                                       <div className='col-md-8'>
                                         <input type="text" className="form-control" onChange={(e) => { setmlocation(e.target.value) }} defaultValue={mlocation} />
                                       </div>
