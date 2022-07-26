@@ -75,12 +75,12 @@ function Managementmembershipcard() {
     if (modelupdatern == '') {
       setisOpensuccessmsgw(true);
       setwarmessage("Please select a partner.");
-    } else if (modelupdatecomment.length < 10) {
-      setisOpensuccessmsgw(true);
-      setwarmessage("The internal number is invalid.");
     } else if (modelupdatecardnum.length != 8) {
       setisOpensuccessmsgw(true);
       setwarmessage("The card number is invalid.");
+    } else if (modelupdatecomment.length < 10) {
+      setisOpensuccessmsgw(true);
+      setwarmessage("The internal number is invalid.");
     } else if (modelupdatebalance == '') {
       setisOpensuccessmsgw(true);
       setwarmessage("Please enter the amount as a number.");
@@ -130,7 +130,7 @@ function Managementmembershipcard() {
         setisOpensuccessmsgw(true);
         setwarmessage("This is not a registered card number.");
       } else {
-        if (reseller_id != checkcardres[0].resellerid) {
+        if (reseller_id == checkcardres[0].resellerid) {
           setisOpensuccessmsgw(true);
           setwarmessage("Another partner's card number.");
         } else {
@@ -155,12 +155,12 @@ function Managementmembershipcard() {
     if (modelResellername == '') {
       setisOpensuccessmsgw(true);
       setwarmessage("Please select a partner.");
-    } else if (modelComment.length < 10) {
-      setisOpensuccessmsgw(true);
-      setwarmessage("The internal number is invalid.");
     } else if (modelTCardnum.length != 8) {
       setisOpensuccessmsgw(true);
       setwarmessage("The card number is invalid.");
+    } else if (modelComment.length < 10) {
+      setisOpensuccessmsgw(true);
+      setwarmessage("The internal number is invalid.");
     } else if (modelBalance == '') {
       setisOpensuccessmsgw(true);
       setwarmessage("Please enter the amount as a number.");
@@ -437,7 +437,6 @@ function Managementmembershipcard() {
 
   //sorting
   const sorting = (col) => {
-    console.log(col)
     if (order === "ASC") {
       const sorted = [...data].sort((a, b) =>
         col === 'balance' ?
@@ -549,7 +548,7 @@ function Managementmembershipcard() {
                         <div id="datatable_wrapper" className="information_dataTables dataTables_wrapper dt-bootstrap4 table-responsive">
                           <div className="d-flex exportPopupBtn">
                             <a className="btn button btn-info mx-2" onClick={openModal}>{t('Enrollment')}</a>
-                            <a className="btn button btn-info" onClick={openModalc}>{t('Change')}</a>
+                            <a className="btn button btn-info" onClick={openModalc}>{t('Charge')}</a>
                           </div>
                           <table className="display table-bordered dataTable no-footer mt-6">
                             <thead>
@@ -566,9 +565,9 @@ function Managementmembershipcard() {
                               {currentItems.length > 0 ? currentItems.map((item, i) => {
                                 return <tr key={i} className="odd show-modal" onClick={() => openModalu({ mresellername: item.resellerid, mcardnum: item.cardnum, mbalance: item.balance, mseq: item.seq, mcomment: item.comment, mdescription: item.description })}>
                                   <td>{item.resellername}</td>
-                                  <td>{item.comment}</td>
-                                  <td>{item.balance}</td>
                                   <td>{item.cardnum}</td>
+                                  <td>{item.balance}</td>
+                                  <td>{item.comment}</td>
                                   <td>{item.lastupdate}</td>
                                   <td>{item.description}</td>
                                 </tr>
@@ -641,7 +640,7 @@ function Managementmembershipcard() {
                                               <label className="lablePapding" for="email">{t('Card Number')}</label>
                                             </div>
                                             <div className="col-md-8">
-                                              <input type="text" className="form-control" id="updatecardnum" onChange={(e) => { setModelupdatecomment(e.target.value) }} />
+                                              <input type="text" className="form-control" id="updatecardnum" onChange={(e) => { setModelupdatecardnum(e.target.value) }} />
                                             </div>
                                           </div>
                                         </div>
@@ -651,7 +650,7 @@ function Managementmembershipcard() {
                                               <label className="lablePapding" for="email">{t('InternalNumber')}</label>
                                             </div>
                                             <div className="col-md-8">
-                                              <input type="text" className="form-control" id="updatecomment" onChange={(e) => { setModelupdatecardnum(e.target.value) }} />
+                                              <input type="text" className="form-control" id="updatecomment" onChange={(e) => { setModelupdatecomment(e.target.value) }} />
                                             </div>
                                           </div>
                                         </div>
@@ -855,7 +854,7 @@ function Managementmembershipcard() {
                                             </div>
                                             <div className="col-md-8">
                                               {/* <span>{modelComment}</span> */}
-                                              <input type="text" className="form-control" onChange={(e) => { setmodelComment(e.target.value) }} defaultValue={modelComment} />
+                                              <input type="text" className="form-control" onChange={(e) => { setmodelTCardnum(e.target.value) }} defaultValue={modelComment} />
                                             </div>
                                           </div>
                                         </div>
@@ -866,7 +865,7 @@ function Managementmembershipcard() {
                                             </div>
                                             <div className="col-md-8">
                                               {/* <span>{modelTCardnum}</span> */}
-                                              <input type="text" className="form-control" onChange={(e) => { setmodelTCardnum(e.target.value) }} defaultValue={modelTCardnum} />
+                                              <input type="text" className="form-control" onChange={(e) => { setmodelComment(e.target.value) }} defaultValue={modelTCardnum} />
                                             </div>
                                           </div>
                                         </div>
